@@ -37,13 +37,30 @@ export const Route = createFileRoute("/api/contact")({
         }
 
         const { processContactEmail } = await import("@/lib/contact-email.server");
-        const result = await processContactEmail(parsed.data);
+        let result;
+        try {
+          result = await processContactEmail(parsed.data);
+        } catch (error) {
+          const detail = error instanceof Error ? error.message : String(error);
+          console.error("[contact] onverwachte fout:", detail);
+          return Response.json({ sent: false, error: "unexpected_error", detail }, { status: 500 });
+        }
+
         if (!result.stored) {
-          return Response.json({ sent: false, error: result.reason }, { status: 503 });
+          console.error("[contact] opslag mislukt:", result.reason);
+          return Response.json(
+            { sent: false, error: result.reason ?? "storage_failed" },
+            { status: 503 },
+          );
         }
 
         // Opslag is de succesgrens: fouten bij Brevo/SMTP staan op de bewaarde rij.
-        return Response.json({ sent: true }, { status: 200 });
+        if (result.reason) {
+          console.error("[contact] bewaard, maar mail mislukt:", result.reason);
+          return Response.json({ sent: true, mailed: false, error: result.reason }, { status: 200 });
+        }
+        return Response.json({ sent: true, mailed: true }, { status: 200 });
+
       },
     },
   },
