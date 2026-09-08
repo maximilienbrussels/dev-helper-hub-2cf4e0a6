@@ -45,6 +45,8 @@ export type PageKey =
   | "volunteers"
   | "events"
   | "press"
+  | "cookies"
+  | "status"
   | "register";
 
 export const SLUGS: Record<PageKey, Record<Lang, string>> = {
@@ -84,6 +86,8 @@ export const SLUGS: Record<PageKey, Record<Lang, string>> = {
   volunteers: { nl: "vrijwilligers", fr: "benevolat", en: "volunteering" },
   events: { nl: "kalender", fr: "agenda", en: "calendar" },
   press: { nl: "pers", fr: "presse", en: "press" },
+  cookies: { nl: "cookies", fr: "cookies", en: "cookies" },
+  status: { nl: "status", fr: "status", en: "status" },
   register: { nl: "registreren", fr: "inscription", en: "register" },
 };
 
@@ -911,6 +915,40 @@ export const PAGE_META: Record<PageKey, Record<Lang, Meta>> = {
       title: "Press & media kit — Maxilien",
       description:
         "Logos in several formats, brand colours, press photos, key figures and press contact for the Brussels city farm.",
+    },
+  },
+  cookies: {
+    nl: {
+      title: "Cookie-statement — Maxilien",
+      description:
+        "Geen trackers, geen advertentiecookies en dus geen cookiebanner. Enkel strikt functionele cookies.",
+    },
+    fr: {
+      title: "Déclaration cookies — Maxilien",
+      description:
+        "Pas de traceurs, pas de cookies publicitaires et donc aucune bannière cookies. Uniquement des cookies strictement fonctionnels.",
+    },
+    en: {
+      title: "Cookie statement — Maxilien",
+      description:
+        "No trackers, no advertising cookies and therefore no cookie banner. Strictly functional cookies only.",
+    },
+  },
+  status: {
+    nl: {
+      title: "Status & infrastructuur — Maxilien",
+      description:
+        "Onze domeinen, de geïsoleerde mailgate send.maximilien.site en de Europese infrastructuur achter dit platform.",
+    },
+    fr: {
+      title: "Statut & infrastructure — Maxilien",
+      description:
+        "Nos domaines, la passerelle mail isolée send.maximilien.site et l'infrastructure européenne du platform.",
+    },
+    en: {
+      title: "Status & infrastructure — Maxilien",
+      description:
+        "Our domains, the isolated mail gateway send.maximilien.site and the European infrastructure behind this platform.",
     },
   },
   register: {
