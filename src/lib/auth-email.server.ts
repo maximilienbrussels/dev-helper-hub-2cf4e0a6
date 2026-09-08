@@ -19,17 +19,43 @@ export async function requestOrigin(): Promise<string> {
   const { getRequestHeaders } = await import("@tanstack/react-start/server");
   const { siteOrigin } = await import("./email.server");
   const headers = new Headers(getRequestHeaders() as unknown as Record<string, string>);
+  const configuredMode = process.env["VITE_APP_MODE"];
+  const configuredOrigin =
+    configuredMode === "field"
+      ? "https://maximilien.app"
+      : configuredMode === "admin"
+        ? "https://maximilien.site"
+        : undefined;
+  const trustedOrigin = (raw: string | null): string | null => {
+    if (!raw) return null;
+    try {
+      const candidate = new URL(/^https?:\/\//i.test(raw) ? raw : `https://${raw}`);
+      const hostname = candidate.hostname.toLowerCase();
+      const trusted =
+        hostname === "maximilien.site" ||
+        hostname.endsWith(".maximilien.site") ||
+        hostname === "maximilien.app" ||
+        hostname.endsWith(".maximilien.app") ||
+        hostname === "localhost" ||
+        hostname === "127.0.0.1" ||
+        hostname.endsWith(".lovable.app");
+      return trusted ? candidate.origin.replace(/\/+$/, "") : null;
+    } catch {
+      return null;
+    }
+  };
   // Achter een proxy (Vercel) staat het publieke adres in x-forwarded-host.
   const forwardedHost = headers.get("x-forwarded-host")?.split(",")[0]?.trim();
   if (forwardedHost) {
     const proto = headers.get("x-forwarded-proto")?.split(",")[0]?.trim() || "https";
-    return `${proto}://${forwardedHost}`.replace(/\/+$/, "");
+    const forwardedOrigin = trustedOrigin(`${proto}://${forwardedHost}`);
+    if (forwardedOrigin) return forwardedOrigin;
   }
-  const origin = headers.get("origin");
-  if (origin && /^https?:\/\//.test(origin)) return origin.replace(/\/+$/, "");
-  const host = headers.get("host");
-  if (host) return `https://${host}`;
-  return siteOrigin();
+  const origin = trustedOrigin(headers.get("origin"));
+  if (origin) return origin;
+  const host = trustedOrigin(headers.get("host"));
+  if (host) return host;
+  return configuredOrigin ?? siteOrigin();
 }
 
 /**
@@ -108,6 +134,7 @@ async function deliver(
 ) {
   const { authActionEmail, sendMail } = await import("./email.server");
   const { subject, html } = authActionEmail(kind, { naam, url, lang, code });
+  console.info(`[auth-mail] kind=${kind} status=dispatching callback=${new URL(url).origin}`);
   return sendMail({
     to: email,
     subject,
@@ -115,6 +142,7 @@ async function deliver(
     text: authPlainText(kind, url, lang, code),
     transactional: true,
     kind: `auth-${kind}`,
+    transport: "brevo",
   });
 }
 
@@ -138,11 +166,10 @@ function requireDelivered(
   kind: AuthLinkKind,
 ): void {
   if (result.sent) return;
+  console.error(
+    `[auth-mail] kind=${kind} status=failed code=${result.reason ?? "unknown"} detail=${result.error ?? "geen detail"}`,
+  );
   const friendly = result.reason ? DELIVERY_MESSAGES[result.reason] : undefined;
-  if (!friendly) {
-    // Technische details enkel in het serverlogboek, niet naar de gebruiker.
-    console.error(`[auth-mail] ${kind} niet verzonden:`, result.reason, result.error);
-  }
   throw new Error(
     friendly ??
       `De ${kind === "verify" ? "bevestigingsmail" : "inlogmail"} kon niet worden verzonden. Probeer het straks opnieuw.`,
@@ -277,8 +304,16 @@ export async function sendTeamLoginCode(
 
   try {
     const res = await deliver("teamMagic", email, naam, url, lang, code);
+    if (!res.sent) {
+      console.error(
+        `[auth-mail] kind=teamMagic status=failed code=${res.reason ?? "unknown"} detail=${res.error ?? "geen detail"}`,
+      );
+    }
     return { delivered: res.sent, reason: res.reason, error: res.error, code, url };
   } catch (error) {
+    console.error(
+      `[auth-mail] kind=teamMagic status=exception detail=${error instanceof Error ? error.message : "onbekend"}`,
+    );
     return {
       delivered: false,
       reason: "send_failed",

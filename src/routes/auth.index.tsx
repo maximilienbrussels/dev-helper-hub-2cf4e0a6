@@ -295,8 +295,13 @@ function AuthPage() {
       }
       if (!res.delivered && res.preview) setBrevoPrompt(true);
 
-    } catch {
-      toast.error("Versturen mislukt. Probeer later opnieuw.");
+    } catch (error) {
+      console.error("[auth] inlogcode aanvragen mislukt", error);
+      toast.error(
+        error instanceof Error && error.message
+          ? error.message
+          : "Versturen mislukt. Probeer later opnieuw.",
+      );
     } finally {
       setBusy(false);
     }
