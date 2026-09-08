@@ -7,7 +7,7 @@
 // worker-mailer wordt pas binnen sendMail geladen: het pakket vereist
 // `cloudflare:sockets`, dat enkel in de Worker-runtime bestaat (niet in dev).
 import { MAIL_COPY, type MailLang } from "./email-copy";
-import { buildBrevoPayload, brevoRoute } from "./brevo";
+import { brevoEnv, buildBrevoPayload, brevoRoute } from "./brevo";
 import { AUTH_MAIL_COPY, type AuthMailKind } from "./auth-mail-copy";
 import {
   classifySmtpError,
@@ -81,24 +81,34 @@ async function sendViaBrevo(
   const url = route.url("smtp/email");
   const headers = route.headers;
 
+  // Afzender komt ALTIJD uit de omgeving: eerst BREVO_SENDER_EMAIL /
+  // BREVO_SENDER_NAME, anders de vaste huisstijl-terugval no-reply@send.maximilien.site
+  // (zie brevo.ts). SMTP-instellingen mogen het Brevo-afzenderadres nooit overschrijven.
+  const senderEmail = brevoEnv("BREVO_SENDER_EMAIL") ?? "";
+  const senderName = brevoEnv("BREVO_SENDER_NAME") ?? "";
+  const payload = buildBrevoPayload({
+    to: opts.to,
+    subject: opts.subject,
+    htmlContent: opts.html,
+    ...(opts.text ? { textContent: opts.text } : {}),
+    ...(opts.transactional ? { transactional: true } : {}),
+    ...(opts.replyTo ? { replyTo: opts.replyTo } : {}),
+    ...(senderName ? { senderName } : {}),
+    ...(senderEmail ? { senderEmail } : {}),
+  });
+
+  // Verificatie in het serverlogboek: exacte afzender die naar Brevo gaat.
+  console.info(
+    `[email] brevo-afzender: ${payload.sender.name} <${payload.sender.email}> via ${route.label}`,
+  );
+
   const res = await fetch(url, {
     method: "POST",
     // Tijdschild: de API-oproep mag de serverfunctie nooit laten vastlopen.
     signal: AbortSignal.timeout(BREVO_TIMEOUT_MS),
     headers,
 
-    body: JSON.stringify(
-      buildBrevoPayload({
-        to: opts.to,
-        subject: opts.subject,
-        htmlContent: opts.html,
-        ...(opts.text ? { textContent: opts.text } : {}),
-        ...(opts.transactional ? { transactional: true } : {}),
-        ...(opts.replyTo ? { replyTo: opts.replyTo } : {}),
-        ...(cfg.fromName ? { senderName: cfg.fromName } : {}),
-        ...(cfg.fromAddress ? { senderEmail: cfg.fromAddress } : {}),
-      }),
-    ),
+    body: JSON.stringify(payload),
   });
   const text = await res.text().catch(() => "");
   if (!res.ok) {
