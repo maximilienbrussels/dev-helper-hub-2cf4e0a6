@@ -6,7 +6,7 @@
       "source": "src/, public/, tests/, package.json, vite.config.ts, tsconfig.json, eslint.config.js, etc.",
       "outcome": "preserve",
       "status": "complete",
-      "next_action": "None — build and tests pass"
+      "next_action": "None — build and tests pass, preview loads"
     },
     {
       "capability": "database_schema",
@@ -34,7 +34,7 @@
       "source": "Stripe (@stripe/react-stripe-js, stripe)",
       "outcome": "preserve",
       "status": "pending",
-      "next_action": "Provide STRIPE_SECRET_KEY and STRIPE_PUBLISHABLE_KEY"
+      "next_action": "Provide STRIPE_SECRET_KEY and VITE_STRIPE_PUBLISHABLE_KEY"
     },
     {
       "capability": "email",
@@ -48,7 +48,7 @@
       "source": "S3-compatible (@aws-sdk/client-s3)",
       "outcome": "preserve",
       "status": "pending",
-      "next_action": "Provide S3 endpoint, bucket, and credentials if used"
+      "next_action": "Provide S3_ENDPOINT, S3_REGION, S3_BUCKET_NAME, S3_ACCESS_KEY, S3_SECRET_KEY, S3_PUBLIC_URL_PREFIX"
     },
     {
       "capability": "social_posting",
@@ -59,10 +59,10 @@
     },
     {
       "capability": "ai_features",
-      "source": "@ai-sdk/openai-compatible, ai SDK",
+      "source": "Infomaniak AI (@ai-sdk/openai-compatible, ai SDK)",
       "outcome": "preserve",
       "status": "pending",
-      "next_action": "Provide AI provider base URL and API key"
+      "next_action": "Provide INFOMANIAK_API_KEY and INFOMANIAK_PRODUCT_ID"
     },
     {
       "capability": "secrets",
