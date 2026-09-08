@@ -108,7 +108,7 @@ export async function resolveSmtpConfig(): Promise<SmtpConfig> {
     (dbComplete ? "" : envFrom.address) ||
     envFrom.address
   ).trim();
-  const fromName = (db?.from_name || envFrom.name || DEFAULT_FROM_NAME).trim();
+  const fromName = (db?.from_name || envFromName || DEFAULT_FROM_NAME).trim();
   const secure = db?.secure ?? port === 465;
 
   return {
