@@ -36,7 +36,14 @@ export type SmtpConfigStatus = {
 };
 
 const DEFAULT_FROM_NAME = "Maxilien";
-const DEFAULT_FROM_ADDRESS = "noreply@maximilien.site";
+/** Vaste huisstijl-terugval; BREVO_SENDER_EMAIL uit de omgeving gaat altijd voor. */
+const DEFAULT_FROM_ADDRESS = "no-reply@send.maximilien.site";
+
+/** Afzenderadres: eerst BREVO_SENDER_EMAIL, dan SMTP_FROM, dan de terugval. */
+function envFromAddress(): string {
+  const brevoSender = process.env.BREVO_SENDER_EMAIL?.trim();
+  return brevoSender || process.env.SMTP_FROM?.trim() || "";
+}
 
 function parsePort(value: unknown, fallback: number): number {
   const digits = String(value ?? "").match(/\d+/);
@@ -88,7 +95,8 @@ export async function resolveSmtpConfig(): Promise<SmtpConfig> {
   const db = await readDbConfig();
   const dbComplete = Boolean(db?.host && db?.username && db?.password);
 
-  const envFrom = splitFrom(process.env.SMTP_FROM || "");
+  const envFrom = splitFrom(envFromAddress());
+  const envFromName = process.env.BREVO_SENDER_NAME?.trim() || envFrom.name;
   const host = (dbComplete ? db!.host : process.env.SMTP_HOST) ?? "";
   const username = (dbComplete ? db!.username : process.env.SMTP_USER) ?? "";
   const password = (dbComplete ? db!.password : process.env.SMTP_PASS) ?? "";
@@ -100,7 +108,7 @@ export async function resolveSmtpConfig(): Promise<SmtpConfig> {
     (dbComplete ? "" : envFrom.address) ||
     envFrom.address
   ).trim();
-  const fromName = (db?.from_name || envFrom.name || DEFAULT_FROM_NAME).trim();
+  const fromName = (db?.from_name || envFromName || DEFAULT_FROM_NAME).trim();
   const secure = db?.secure ?? port === 465;
 
   return {
