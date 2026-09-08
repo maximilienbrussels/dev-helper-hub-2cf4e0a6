@@ -1,75 +1,77 @@
 {
-  "source": "https://github.com/maximilienbrussels/dev-helper-hub.git",
+  "source": "https://github.com/maximilienbrussels/dev-helper-den-91cbbbcd.git",
+  "source_project": "Blueprint Buddy / dev-helper-den-91cbbbcd",
+  "migrated_at": "2026-09-08T01:21:00Z",
   "capabilities": [
     {
-      "capability": "application_code",
-      "source": "src/, public/, tests/, package.json, vite.config.ts, tsconfig.json, eslint.config.js, etc.",
+      "capability": "tanstack_start_application_stack",
+      "source": "src/, package.json, vite.config.ts, tsconfig.json, public/",
       "outcome": "preserve",
-      "status": "in_progress",
-      "next_action": "Copy repository files into project root"
+      "status": "verified",
+      "next_action": "Build and homepage render verified; runtime database features need DATABASE_URL"
     },
     {
-      "capability": "database_schema",
-      "source": "neon/migrations/*.sql",
+      "capability": "neon_postgresql_database",
+      "source": "neon/migrations/*.sql (37 migration files)",
       "outcome": "preserve",
-      "status": "pending",
-      "next_action": "Apply migrations to connected PostgreSQL database"
+      "status": "schema_migrated",
+      "next_action": "Provide DATABASE_URL secret to connect the Neon database; run migrations against target database"
+    },
+    {
+      "capability": "custom_local_authentication",
+      "source": "src/lib/neon-auth-compat.ts, src/lib/local-auth.functions.ts, src/lib/auth-email.functions.ts, src/lib/auth/*",
+      "outcome": "preserve",
+      "status": "code_migrated",
+      "next_action": "Provide JWT signing secret and verify DATABASE_URL; passkeys need HTTPS/localhost end-to-end test"
+    },
+    {
+      "capability": "transactional_email_smtp_brevo",
+      "source": "src/lib/mail.ts, worker-mailer usage, SMTP env vars",
+      "outcome": "preserve",
+      "status": "code_migrated",
+      "next_action": "Provide SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM secrets"
+    },
+    {
+      "capability": "s3_compatible_file_storage",
+      "source": "@aws-sdk/client-s3 usage, media_assets table, src/lib/storage/*",
+      "outcome": "preserve",
+      "status": "code_migrated",
+      "next_action": "Provide S3/Scaleway access key, secret key, endpoint, bucket and region secrets"
+    },
+    {
+      "capability": "stripe_payments",
+      "source": "@stripe/react-stripe-js, stripe, payments table, checkout components",
+      "outcome": "preserve",
+      "status": "code_migrated",
+      "next_action": "Provide STRIPE_PUBLISHABLE_KEY and STRIPE_SECRET_KEY; configure webhook endpoint"
+    },
+    {
+      "capability": "bluesky_social_integration",
+      "source": "src/lib/bot/*, BSKY_IDENTIFIER, BSKY_APP_PASSWORD env vars",
+      "outcome": "preserve",
+      "status": "code_migrated",
+      "next_action": "Provide BSKY_IDENTIFIER and BSKY_APP_PASSWORD secrets"
+    },
+    {
+      "capability": "google_oauth_and_calendar",
+      "source": "src/integrations/lovable/index.ts, calendar sync features",
+      "outcome": "preserve",
+      "status": "code_migrated",
+      "next_action": "Provide Google OAuth client ID/secret and configure allowed origins/callbacks"
+    },
+    {
+      "capability": "field_pwa",
+      "source": "vite-plugin-pwa, public/manifest.field.json, src/components/veld/*, src/routes/veld/*",
+      "outcome": "preserve",
+      "status": "code_migrated",
+      "next_action": "Verify VITE_APP_MODE=field build and service worker registration"
     },
     {
       "capability": "database_records",
-      "source": "none bundled",
+      "source": "database-records/manifest.json",
       "outcome": "pending",
-      "status": "pending",
-      "next_action": "Request full record export from source project if needed"
-    },
-    {
-      "capability": "authentication",
-      "source": "Custom Neon Auth (app_users, app_auth_tokens, app_user_identities)",
-      "outcome": "preserve",
-      "status": "pending",
-      "next_action": "Provide DATABASE_URL and ensure schema is applied"
-    },
-    {
-      "capability": "payments",
-      "source": "Stripe (@stripe/react-stripe-js, stripe)",
-      "outcome": "preserve",
-      "status": "pending",
-      "next_action": "Provide STRIPE_SECRET_KEY and STRIPE_PUBLISHABLE_KEY"
-    },
-    {
-      "capability": "email",
-      "source": "SMTP / worker-mailer",
-      "outcome": "preserve",
-      "status": "pending",
-      "next_action": "Provide SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM"
-    },
-    {
-      "capability": "storage",
-      "source": "S3-compatible (@aws-sdk/client-s3)",
-      "outcome": "preserve",
-      "status": "pending",
-      "next_action": "Provide S3 endpoint, bucket, and credentials if used"
-    },
-    {
-      "capability": "social_posting",
-      "source": "Bluesky (BSKY_IDENTIFIER, BSKY_APP_PASSWORD)",
-      "outcome": "preserve",
-      "status": "pending",
-      "next_action": "Provide Bluesky credentials"
-    },
-    {
-      "capability": "ai_features",
-      "source": "@ai-sdk/openai-compatible, ai SDK",
-      "outcome": "preserve",
-      "status": "pending",
-      "next_action": "Provide AI provider base URL and API key"
-    },
-    {
-      "capability": "secrets",
-      "source": ".env / environment variables",
-      "outcome": "pending",
-      "status": "pending",
-      "next_action": "Re-create required secrets in Lovable"
+      "status": "absent",
+      "next_action": "Export records from source project and provide them for import; seed files under neon/seed/ are available but not auto-applied"
     }
   ]
 }
