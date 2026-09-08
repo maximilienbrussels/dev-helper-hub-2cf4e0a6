@@ -22,9 +22,12 @@
 - [ ] Volledige test ingelogd (vereist databank-verbinding)
 - [ ] Installatietest op een echte Samsung-telefoon (na publicatie op maximilien.app)
 
-## Unified backend & auth — geblokkeerd op ontbrekende sleutels
-- [ ] DATABASE_URL (Neon PostgreSQL)
-- [ ] Brevo API-sleutel (inlogcodes, transactionele mail)
+## Unified backend & auth
+- [x] DATABASE_URL (Neon PostgreSQL)
+- [x] Brevo API-sleutel en afzender (inlogcodes, transactionele mail)
+- [x] Authmails verplicht via dezelfde Brevo-route als contactmail
+- [x] Callbackdomein per aanvraag geborgd voor maximilien.site en maximilien.app
+- [x] Exacte Brevo-status en unieke berichtreferentie in serverlogboek
 - [ ] Scaleway S3-sleutels (mediabibliotheek)
 - [ ] Stripe-sleutels (webshop, giften)
 - [ ] OAuth-secrets: Google, GitHub, Mastodon, Bluesky

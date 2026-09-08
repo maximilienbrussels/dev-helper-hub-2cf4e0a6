@@ -132,7 +132,7 @@ export function LoginMailDiagnostics() {
               <p className="mt-1 text-muted-foreground">
                 Alle transactionele mail loopt via de Brevo HTTP-API (sleutel{" "}
                 <code className="rounded bg-muted px-1">xkeysib-…</code>). Er is geen SMTP-terugval
-                meer. Het afzenderdomein (noreply@maximilien.site) moet in Brevo geverifieerd zijn
+                meer. Het afzenderdomein (no-reply@send.maximilien.site) moet in Brevo geverifieerd zijn
                 met SPF en DKIM.
               </p>
             </div>

@@ -68,7 +68,11 @@ export const diagnoseLoginAndMail = createServerFn({ method: "GET" })
     });
 
     const fromDomain = cfg.fromAddress.split("@")[1] ?? "";
-    const knownDomain = ["maximilien.site", "maximilien.brussels"].includes(fromDomain);
+    const knownDomain = [
+      "maximilien.site",
+      "send.maximilien.site",
+      "maximilien.brussels",
+    ].includes(fromDomain);
     checks.push({
       id: "sender",
       label: "Afzenderdomein",
@@ -77,8 +81,8 @@ export const diagnoseLoginAndMail = createServerFn({ method: "GET" })
         ? `${cfg.fromName} <${cfg.fromAddress}>`
         : "Geen afzenderadres ingesteld.",
       hint: fromDomain
-        ? `Het domein ${fromDomain} moet in Brevo geverifieerd zijn (SPF + DKIM). Aanbevolen afzender: noreply@maximilien.site.`
-        : "Stel een afzenderadres in, bij voorkeur noreply@maximilien.site.",
+        ? `Het domein ${fromDomain} moet in Brevo geverifieerd zijn (SPF + DKIM). Aanbevolen afzender: no-reply@send.maximilien.site.`
+        : "Stel een afzenderadres in, bij voorkeur no-reply@send.maximilien.site.",
     });
 
     /* ---------------------------- Neon Auth --------------------------- */
@@ -161,6 +165,8 @@ export const diagnoseLoginAndMail = createServerFn({ method: "GET" })
         "https://www.maximilien.brussels",
         "https://maximilien.site",
         "https://www.maximilien.site",
+        "https://maximilien.app",
+        "https://www.maximilien.app",
         "http://localhost:8080",
       ],
     };

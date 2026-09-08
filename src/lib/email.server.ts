@@ -96,6 +96,9 @@ async function sendViaBrevo(
     ...(senderName ? { senderName } : {}),
     ...(senderEmail ? { senderEmail } : {}),
   });
+  if (payload.headers) {
+    payload.headers["X-Entity-Ref-ID"] = crypto.randomUUID();
+  }
 
   // Verificatie in het serverlogboek: exacte afzender die naar Brevo gaat.
   console.info(
@@ -112,6 +115,9 @@ async function sendViaBrevo(
   });
   const text = await res.text().catch(() => "");
   if (!res.ok) {
+    console.error(
+      `[email] brevo-response status=${res.status} route=${route.label} sender=${payload.sender.email} body=${text.slice(0, 300)}`,
+    );
     throw new Error(`Brevo ${res.status} via ${route.label}: ${text.slice(0, 300)}`);
   }
   let messageId: string | undefined;
