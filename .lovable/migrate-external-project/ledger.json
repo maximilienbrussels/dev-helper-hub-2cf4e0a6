@@ -1,0 +1,75 @@
+{
+  "source": "https://github.com/maximilienbrussels/dev-helper-hub.git",
+  "capabilities": [
+    {
+      "capability": "application_code",
+      "source": "src/, public/, tests/, package.json, vite.config.ts, tsconfig.json, eslint.config.js, etc.",
+      "outcome": "preserve",
+      "status": "in_progress",
+      "next_action": "Copy repository files into project root"
+    },
+    {
+      "capability": "database_schema",
+      "source": "neon/migrations/*.sql",
+      "outcome": "preserve",
+      "status": "pending",
+      "next_action": "Apply migrations to connected PostgreSQL database"
+    },
+    {
+      "capability": "database_records",
+      "source": "none bundled",
+      "outcome": "pending",
+      "status": "pending",
+      "next_action": "Request full record export from source project if needed"
+    },
+    {
+      "capability": "authentication",
+      "source": "Custom Neon Auth (app_users, app_auth_tokens, app_user_identities)",
+      "outcome": "preserve",
+      "status": "pending",
+      "next_action": "Provide DATABASE_URL and ensure schema is applied"
+    },
+    {
+      "capability": "payments",
+      "source": "Stripe (@stripe/react-stripe-js, stripe)",
+      "outcome": "preserve",
+      "status": "pending",
+      "next_action": "Provide STRIPE_SECRET_KEY and STRIPE_PUBLISHABLE_KEY"
+    },
+    {
+      "capability": "email",
+      "source": "SMTP / worker-mailer",
+      "outcome": "preserve",
+      "status": "pending",
+      "next_action": "Provide SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM"
+    },
+    {
+      "capability": "storage",
+      "source": "S3-compatible (@aws-sdk/client-s3)",
+      "outcome": "preserve",
+      "status": "pending",
+      "next_action": "Provide S3 endpoint, bucket, and credentials if used"
+    },
+    {
+      "capability": "social_posting",
+      "source": "Bluesky (BSKY_IDENTIFIER, BSKY_APP_PASSWORD)",
+      "outcome": "preserve",
+      "status": "pending",
+      "next_action": "Provide Bluesky credentials"
+    },
+    {
+      "capability": "ai_features",
+      "source": "@ai-sdk/openai-compatible, ai SDK",
+      "outcome": "preserve",
+      "status": "pending",
+      "next_action": "Provide AI provider base URL and API key"
+    },
+    {
+      "capability": "secrets",
+      "source": ".env / environment variables",
+      "outcome": "pending",
+      "status": "pending",
+      "next_action": "Re-create required secrets in Lovable"
+    }
+  ]
+}
