@@ -95,7 +95,8 @@ export async function resolveSmtpConfig(): Promise<SmtpConfig> {
   const db = await readDbConfig();
   const dbComplete = Boolean(db?.host && db?.username && db?.password);
 
-  const envFrom = splitFrom(process.env.SMTP_FROM || "");
+  const envFrom = splitFrom(envFromAddress());
+  const envFromName = process.env.BREVO_SENDER_NAME?.trim() || envFrom.name;
   const host = (dbComplete ? db!.host : process.env.SMTP_HOST) ?? "";
   const username = (dbComplete ? db!.username : process.env.SMTP_USER) ?? "";
   const password = (dbComplete ? db!.password : process.env.SMTP_PASS) ?? "";
