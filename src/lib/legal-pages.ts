@@ -49,6 +49,7 @@ export const PRIVACY_DOC: Record<Lang, LegalDoc> = {
         h: "3. Transactionele e-mails",
         p: [
           "Bevestigingen, herinneringen, afhaalberichten en certificaten versturen we via Brevo (Sendinblue SAS, Frankrijk), onze verwerker voor transactionele e-mail.",
+          "Die mails vertrekken via een apart, geïsoleerd subdomein (send.maximilien.site) en bevatten geen leesbevestigingen of trackingpixels.",
           "Deze e-mails horen bij je aanvraag of bestelling. We versturen geen commerciële nieuwsbrief zonder je uitdrukkelijke toestemming, en elke nieuwsbrief bevat een uitschrijflink.",
         ],
       },
@@ -133,6 +134,7 @@ export const PRIVACY_DOC: Record<Lang, LegalDoc> = {
         h: "3. E-mails transactionnels",
         p: [
           "Confirmations, rappels, avis de retrait et certificats sont envoyés via Brevo (Sendinblue SAS, France), notre sous-traitant pour l'e-mail transactionnel.",
+          "Ces e-mails partent d'un sous-domaine distinct et isolé (send.maximilien.site) et ne contiennent ni accusés de lecture ni pixels de suivi.",
           "Ces e-mails font partie de votre demande ou commande. Aucune newsletter commerciale n'est envoyée sans votre consentement explicite, et chaque newsletter comporte un lien de désinscription.",
         ],
       },
@@ -217,6 +219,7 @@ export const PRIVACY_DOC: Record<Lang, LegalDoc> = {
         h: "3. Transactional e-mail",
         p: [
           "Confirmations, reminders, pickup notices and certificates are sent through Brevo (Sendinblue SAS, France), our processor for transactional e-mail.",
+          "Those emails are sent from a separate, isolated subdomain (send.maximilien.site) and contain no read receipts or tracking pixels.",
           "These messages are part of your request or order. We send no commercial newsletter without your explicit consent, and every newsletter carries an unsubscribe link.",
         ],
       },
