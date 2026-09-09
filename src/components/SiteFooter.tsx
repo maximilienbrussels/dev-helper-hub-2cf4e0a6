@@ -275,8 +275,14 @@ export function SiteFooter() {
           <LocalLink to={pathFor("terms", lang)} className={LINK}>
             {{ nl: "Algemene voorwaarden", fr: "Conditions générales", en: "Terms and conditions" }[lang]}
           </LocalLink>
+          <LocalLink to={pathFor("cookies", lang)} className={LINK}>
+            {{ nl: "Cookies", fr: "Cookies", en: "Cookies" }[lang]}
+          </LocalLink>
           <LocalLink to={pathFor("legal", lang)} className={LINK}>
             {{ nl: "Wettelijke vermeldingen", fr: "Mentions légales", en: "Legal notice" }[lang]}
+          </LocalLink>
+          <LocalLink to={pathFor("status", lang)} className={LINK}>
+            {{ nl: "Status", fr: "Statut", en: "Status" }[lang]}
           </LocalLink>
           <PwaInstallButton />
         </nav>
