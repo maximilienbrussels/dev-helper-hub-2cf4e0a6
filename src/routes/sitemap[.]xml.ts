@@ -40,6 +40,9 @@ const PUBLIC_PAGES: PageKey[] = [
   "resources",
   "transparency",
   "legal",
+  "cookies",
+  "status",
+  "press",
 ];
 
 export const Route = createFileRoute("/sitemap.xml")({
