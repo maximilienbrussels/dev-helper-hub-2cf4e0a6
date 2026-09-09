@@ -49,3 +49,12 @@
 - [x] Veldtabbladen verborgen volgens rechten van de medewerker
 - [x] Discreet installatie-icoon in de voettekst i.p.v. het opdringerige venster
 - [x] Losse shells (publiek/beheer/veld) lazy geladen; routes apart gesplitst
+
+## Juridische infrastructuur (afgehandeld)
+- [x] Node vastgezet op 22.x voor stabiele builds
+- [x] Cookieverklaring (/cookies) — geen trackers, geen banner
+- [x] Status & infrastructuur (/status) — domeinen, mailgate, dataopslag
+- [x] Taalloze adressen: /cookies, /status, /impressum, /pers
+- [x] Voettekst: cookies, wettelijke vermeldingen en status
+- [x] Privacybeleid vermeldt geïsoleerde mailgate send.maximilien.site
+- [x] Nieuwe pagina's in de sitemap
