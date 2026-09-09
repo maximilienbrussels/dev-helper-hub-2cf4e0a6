@@ -17,17 +17,21 @@ import { Route as AdoptieRouteImport } from './routes/adoptie'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BevestigenRouteImport } from './routes/bevestigen'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as EMailadresBevestigenRouteImport } from './routes/e-mailadres-bevestigen'
+import { Route as ImpressumRouteImport } from './routes/impressum'
 import { Route as InloglinkRouteImport } from './routes/inloglink'
 import { Route as KlantenkaartRouteImport } from './routes/klantenkaart'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as MijnHoefjesRouteImport } from './routes/mijn-hoefjes'
 import { Route as PartnersRouteImport } from './routes/partners'
+import { Route as PersRouteImport } from './routes/pers'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SocialRouteImport } from './routes/social'
+import { Route as StatusRouteImport } from './routes/status'
 import { Route as StempelVariantenRouteImport } from './routes/stempel-varianten'
 import { Route as SteunRouteImport } from './routes/steun'
 import { Route as VakantiestagesRouteImport } from './routes/vakantiestages'
@@ -185,9 +189,19 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CookiesRoute = CookiesRouteImport.update({
+  id: '/cookies',
+  path: '/cookies',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EMailadresBevestigenRoute = EMailadresBevestigenRouteImport.update({
   id: '/e-mailadres-bevestigen',
   path: '/e-mailadres-bevestigen',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImpressumRoute = ImpressumRouteImport.update({
+  id: '/impressum',
+  path: '/impressum',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InloglinkRoute = InloglinkRouteImport.update({
@@ -215,6 +229,11 @@ const PartnersRoute = PartnersRouteImport.update({
   path: '/partners',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PersRoute = PersRouteImport.update({
+  id: '/pers',
+  path: '/pers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
@@ -238,6 +257,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const SocialRoute = SocialRouteImport.update({
   id: '/social',
   path: '/social',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StatusRoute = StatusRouteImport.update({
+  id: '/status',
+  path: '/status',
   getParentRoute: () => rootRouteImport,
 } as any)
 const StempelVariantenRoute = StempelVariantenRouteImport.update({
@@ -848,17 +872,21 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRouteWithChildren
   '/bevestigen': typeof BevestigenRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/e-mailadres-bevestigen': typeof EMailadresBevestigenRoute
+  '/impressum': typeof ImpressumRoute
   '/inloglink': typeof InloglinkRoute
   '/klantenkaart': typeof KlantenkaartRoute
   '/login': typeof LoginRoute
   '/mijn-hoefjes': typeof MijnHoefjesRoute
   '/partners': typeof PartnersRoute
+  '/pers': typeof PersRoute
   '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/social': typeof SocialRoute
+  '/status': typeof StatusRoute
   '/stempel-varianten': typeof StempelVariantenRoute
   '/steun': typeof SteunRoute
   '/vakantiestages': typeof VakantiestagesRoute
@@ -983,17 +1011,21 @@ export interface FileRoutesByTo {
   '/adoptie': typeof AdoptieRoute
   '/bevestigen': typeof BevestigenRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/e-mailadres-bevestigen': typeof EMailadresBevestigenRoute
+  '/impressum': typeof ImpressumRoute
   '/inloglink': typeof InloglinkRoute
   '/klantenkaart': typeof KlantenkaartRoute
   '/login': typeof LoginRoute
   '/mijn-hoefjes': typeof MijnHoefjesRoute
   '/partners': typeof PartnersRoute
+  '/pers': typeof PersRoute
   '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/social': typeof SocialRoute
+  '/status': typeof StatusRoute
   '/stempel-varianten': typeof StempelVariantenRoute
   '/steun': typeof SteunRoute
   '/vakantiestages': typeof VakantiestagesRoute
@@ -1121,17 +1153,21 @@ export interface FileRoutesById {
   '/auth': typeof AuthRouteWithChildren
   '/bevestigen': typeof BevestigenRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/e-mailadres-bevestigen': typeof EMailadresBevestigenRoute
+  '/impressum': typeof ImpressumRoute
   '/inloglink': typeof InloglinkRoute
   '/klantenkaart': typeof KlantenkaartRoute
   '/login': typeof LoginRoute
   '/mijn-hoefjes': typeof MijnHoefjesRoute
   '/partners': typeof PartnersRoute
+  '/pers': typeof PersRoute
   '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/social': typeof SocialRoute
+  '/status': typeof StatusRoute
   '/stempel-varianten': typeof StempelVariantenRoute
   '/steun': typeof SteunRoute
   '/vakantiestages': typeof VakantiestagesRoute
@@ -1260,17 +1296,21 @@ export interface FileRouteTypes {
     | '/auth'
     | '/bevestigen'
     | '/contact'
+    | '/cookies'
     | '/e-mailadres-bevestigen'
+    | '/impressum'
     | '/inloglink'
     | '/klantenkaart'
     | '/login'
     | '/mijn-hoefjes'
     | '/partners'
+    | '/pers'
     | '/privacy'
     | '/register'
     | '/reset-password'
     | '/sitemap.xml'
     | '/social'
+    | '/status'
     | '/stempel-varianten'
     | '/steun'
     | '/vakantiestages'
@@ -1395,17 +1435,21 @@ export interface FileRouteTypes {
     | '/adoptie'
     | '/bevestigen'
     | '/contact'
+    | '/cookies'
     | '/e-mailadres-bevestigen'
+    | '/impressum'
     | '/inloglink'
     | '/klantenkaart'
     | '/login'
     | '/mijn-hoefjes'
     | '/partners'
+    | '/pers'
     | '/privacy'
     | '/register'
     | '/reset-password'
     | '/sitemap.xml'
     | '/social'
+    | '/status'
     | '/stempel-varianten'
     | '/steun'
     | '/vakantiestages'
@@ -1532,17 +1576,21 @@ export interface FileRouteTypes {
     | '/auth'
     | '/bevestigen'
     | '/contact'
+    | '/cookies'
     | '/e-mailadres-bevestigen'
+    | '/impressum'
     | '/inloglink'
     | '/klantenkaart'
     | '/login'
     | '/mijn-hoefjes'
     | '/partners'
+    | '/pers'
     | '/privacy'
     | '/register'
     | '/reset-password'
     | '/sitemap.xml'
     | '/social'
+    | '/status'
     | '/stempel-varianten'
     | '/steun'
     | '/vakantiestages'
@@ -1671,17 +1719,21 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRouteWithChildren
   BevestigenRoute: typeof BevestigenRoute
   ContactRoute: typeof ContactRoute
+  CookiesRoute: typeof CookiesRoute
   EMailadresBevestigenRoute: typeof EMailadresBevestigenRoute
+  ImpressumRoute: typeof ImpressumRoute
   InloglinkRoute: typeof InloglinkRoute
   KlantenkaartRoute: typeof KlantenkaartRoute
   LoginRoute: typeof LoginRoute
   MijnHoefjesRoute: typeof MijnHoefjesRoute
   PartnersRoute: typeof PartnersRoute
+  PersRoute: typeof PersRoute
   PrivacyRoute: typeof PrivacyRoute
   RegisterRoute: typeof RegisterRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SocialRoute: typeof SocialRoute
+  StatusRoute: typeof StatusRoute
   StempelVariantenRoute: typeof StempelVariantenRoute
   SteunRoute: typeof SteunRoute
   VakantiestagesRoute: typeof VakantiestagesRoute
@@ -1835,11 +1887,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cookies': {
+      id: '/cookies'
+      path: '/cookies'
+      fullPath: '/cookies'
+      preLoaderRoute: typeof CookiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/e-mailadres-bevestigen': {
       id: '/e-mailadres-bevestigen'
       path: '/e-mailadres-bevestigen'
       fullPath: '/e-mailadres-bevestigen'
       preLoaderRoute: typeof EMailadresBevestigenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/impressum': {
+      id: '/impressum'
+      path: '/impressum'
+      fullPath: '/impressum'
+      preLoaderRoute: typeof ImpressumRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/inloglink': {
@@ -1877,6 +1943,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PartnersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pers': {
+      id: '/pers'
+      path: '/pers'
+      fullPath: '/pers'
+      preLoaderRoute: typeof PersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacy': {
       id: '/privacy'
       path: '/privacy'
@@ -1910,6 +1983,13 @@ declare module '@tanstack/react-router' {
       path: '/social'
       fullPath: '/social'
       preLoaderRoute: typeof SocialRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/status': {
+      id: '/status'
+      path: '/status'
+      fullPath: '/status'
+      preLoaderRoute: typeof StatusRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/stempel-varianten': {
@@ -2863,17 +2943,21 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRouteWithChildren,
   BevestigenRoute: BevestigenRoute,
   ContactRoute: ContactRoute,
+  CookiesRoute: CookiesRoute,
   EMailadresBevestigenRoute: EMailadresBevestigenRoute,
+  ImpressumRoute: ImpressumRoute,
   InloglinkRoute: InloglinkRoute,
   KlantenkaartRoute: KlantenkaartRoute,
   LoginRoute: LoginRoute,
   MijnHoefjesRoute: MijnHoefjesRoute,
   PartnersRoute: PartnersRoute,
+  PersRoute: PersRoute,
   PrivacyRoute: PrivacyRoute,
   RegisterRoute: RegisterRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SocialRoute: SocialRoute,
+  StatusRoute: StatusRoute,
   StempelVariantenRoute: StempelVariantenRoute,
   SteunRoute: SteunRoute,
   VakantiestagesRoute: VakantiestagesRoute,

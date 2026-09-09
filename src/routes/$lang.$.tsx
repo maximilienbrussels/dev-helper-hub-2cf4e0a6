@@ -26,6 +26,8 @@ import { AboutPage } from "@/pages/about";
 import { ContactPage } from "@/pages/contact";
 import { PrivacyPage } from "@/pages/privacy";
 import { TermsPage } from "@/pages/terms";
+import { CookiesPage } from "@/pages/cookies";
+import { StatusPage } from "@/pages/status";
 import { MijnHoefjes, academiesQO } from "@/pages/pass";
 import { AcademyIndex } from "@/pages/academy-list";
 import { AcademyQuiz } from "@/pages/academy-quiz";
@@ -301,6 +303,10 @@ function LocalizedPage() {
         return <PrivacyPage />;
       case "terms":
         return <TermsPage />;
+      case "cookies":
+        return <CookiesPage />;
+      case "status":
+        return <StatusPage />;
       case "academy":
         return sub ? <AcademyQuiz slug={sub} /> : <AcademyIndex />;
       case "pass":

@@ -29,6 +29,11 @@ export async function redirectToLocalized(
 /** Extra taalloze/verkorte adressen die naar een pagina verwijzen. */
 const EXTRA_SLUGS: Record<string, PageKey> = {
   legal: "legal",
+  impressum: "legal",
+  cookies: "cookies",
+  cookiebeleid: "cookies",
+  status: "status",
+  pers: "press",
   privacy: "privacy",
   terms: "terms",
   jobs: "jobs",
